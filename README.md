@@ -1,2 +1,4 @@
 # homelab
-K3s home lab
+Documenting my K3s home lab
+
+
