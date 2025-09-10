@@ -1,0 +1,47 @@
+---
+- name: Disable suspend on lid close (Ubuntu laptops/nodes)
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    logind_conf: /etc/systemd/logind.conf
+    lid_settings:
+      - { key: "HandleLidSwitch",              value: "ignore" }
+      - { key: "HandleLidSwitchDocked",        value: "ignore" }
+      - { key: "HandleLidSwitchExternalPower", value: "ignore" }
+
+  tasks:
+    - name: Ensure {{ logind_conf }} exists
+      file:
+        path: "{{ logind_conf }}"
+        state: file
+        mode: "0644"
+
+    - name: Set lid switch behaviors to 'ignore'
+      lineinfile:
+        path: "{{ logind_conf }}"
+        regexp: '^\s*#?\s*{{ item.key }}\s*='
+        line: '{{ item.key }}={{ item.value }}'
+        backrefs: false
+        create: yes
+        backup: yes
+      loop: "{{ lid_settings }}"
+      notify: Restart systemd-logind
+
+    - name: Show resulting lines (debug)
+      shell: "grep -E 'HandleLidSwitch(ExternalPower|Docked)?=' {{ logind_conf }}"
+      register: logind_lines
+      changed_when: false
+
+    - name: Print confirmation
+      debug:
+        msg: "{{ logind_lines.stdout_lines | default([]) }}"
+
+  handlers:
+    - name: Restart systemd-logind
+      systemd:
+        name: systemd-logind
+        state: restarted
+        enabled: yes
+

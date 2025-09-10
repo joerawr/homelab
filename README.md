@@ -12,7 +12,13 @@ The lab consists of three laptops:
 
 All three machines are running Ubuntu 24.04 and are part of a K3s cluster.
 
-## Current Status
+_Why Ubuntu? My kids still sometimes have reasons to use their old laptops, so instead of wiping them and putting something lighterweight, I just left them as Ubuntu._
+
+## Why Laptops?
+
+- It's what I have on hand, and they were idle.
+- Built in UPS
+- Memory: the two Lenovos have 12GB, and the Dell 8GB
 
 The laptops are currently used as dedicated displays for monitoring the cluster:
 *   **Lenovo T460 #1:** Displays Grafana dashboards for cluster health.

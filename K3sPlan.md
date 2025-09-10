@@ -1,4 +1,4 @@
-Here’s a structured way to frame your k3s home lab project so it serves your three purposes (consolidation, re-skilling, portfolio content). I’ve grouped things into Foundational, Promotable Projects, and Cool/Nice-to-Have — with a note on how each plays into learning and portfolio value.
+Here’s a structured way to frame your k3s home lab project so it serves your three purposes (consolidation, re-skilling, portfolio content). I’ve grouped things into Foundational, Promotable Projects, and Cool/Nice-to-Have — with a note on how each plays into review, learning and portfolio value.
 
 🧱 Foundational (baseline infra + cluster hygiene)
 These are the things you’ll need no matter what workloads you run — they give you operational confidence and serve as the “plumbing.”
@@ -10,7 +10,7 @@ These are the things you’ll need no matter what workloads you run — they giv
     *   CNI is baked into k3s.
     *   Work out DNS (CoreDNS, external-dns if you buy a domain).
     *   Plan for exposing workloads: ingress (Traefik built into k3s) vs. LoadBalancer/MetalLB.
-    *   Handle PiHole design question (where do devices point their DNS?) — could be:
+    *   Handle PiHole design question:
         *   Expose PiHole via LoadBalancer IP or NodePort on port 53.
         *   Assign a static MetalLB IP and advertise that as DNS for your home network.
 *   **Cluster monitoring**
@@ -48,24 +48,22 @@ These are the ones you can blog about, document in GitHub, and put on your site 
     *   Display SlackBot activity metrics (scrape history JSON with Prometheus exporter).
     *   Minecraft usage dashboard.
 *   **Other screen visualizations**
-    *   Home automation metrics (temperature, network traffic).
+    *   Ecobee temperature and humidty metrics
     *   K8s real-time pod placement animations (eye candy, good for demos).
 
 📚 Suggested order of attack
 **Foundation:**
 *   Finish Longhorn + default SC (done).
-*   Install Prometheus/Grafana, node-exporter, metrics-server.
-*   K9s + kubectl contexts from your Mac.
+*   Install Prometheus/Grafana, node-exporter, metrics-server (done).
+*   K9s + kubectl contexts from your Mac (done).
 *   Decide on MetalLB for static IPs.
 
 **Promotable Projects:**
 *   Move Minecraft bot next (good external ingress/TLS story).
-*   PiHole (good DNS/MetalLB lesson).
-*   Transmission+VPN (good pod networking/sidecar lesson).
+*   PiHole (good DNS/MetalLB review).
+*   Transmission+VPN (good pod networking/sidecar review).
 *   Power monitoring (adds Grafana “wow” factor).
 
 **Cool:**
 *   DNS consolidation across home devices.
 *   Screen dashboards (nice to show off).
-
-Do you want me to draft this as a polished project roadmap in Markdown (like the SlackBot setup doc), so you can drop it straight into your projects/ section or GitHub repo?
