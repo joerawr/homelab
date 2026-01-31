@@ -1,0 +1,30 @@
+This project is monitoring power around the house, and visualizing it with Grafana.
+
+https://ounapuu.ee/posts/2024/05/02/smartplugs/
+
+https://dev.to/chafroudtarek/part-1-how-to-set-up-grafana-and-prometheus-using-docker-i47
+docker-compose -f docker-compose.monitoring.yml up -d
+
+
+
+Tasmota firmware
+https://ota.tasmota.com/tasmota/release/
+
+Tasmota docker scraper
+https://github.com/astr0n8t/tasmota-power-exporter
+
+Granafa dashboard
+https://github.com/astr0n8t/tasmota-power-exporter/blob/main/grafana.json
+
+PLF12 set up
+https://kaufha.com/plf12/
+
+tasmota_active_power_W
+tasmota_apparent_power_VA
+tasmota_current_A
+tasmota_energy_kWh_total
+tasmota_energy_today_kWh_total
+tasmota_energy_yesterday_kWh_total
+tasmota_power_factor
+tasmota_reactive_power_VAr
+tasmota_voltage_V

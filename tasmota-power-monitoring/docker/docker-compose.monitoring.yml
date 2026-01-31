@@ -1,0 +1,95 @@
+version: '3.8'
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.37.9
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--web.enable-admin-api'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ./data:/prometheus
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:v1.5.0
+    container_name: node_exporter
+    command: '--path.rootfs=/host'
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - /:/host:ro,rslave
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    container_name: cadvisor
+    command:
+      - '-port=8098'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    restart: unless-stopped
+
+  tasmota-1:
+    image: ghcr.io/astr0n8t/tasmota-power-exporter:latest
+    container_name: tasmota-power-1
+    restart: always
+    ports:
+      - 8001:8000
+    environment:
+    - DEVICE_IP=192.168.86.62
+
+  tasmota-2:
+    image: ghcr.io/astr0n8t/tasmota-power-exporter:latest
+    container_name: tasmota-power-2
+    restart: always
+    ports:
+      - 8002:8000
+    environment:
+    - DEVICE_IP=192.168.86.63
+
+  tasmota-3:
+    image: ghcr.io/astr0n8t/tasmota-power-exporter:latest
+    container_name: tasmota-power-3
+    restart: always
+    ports:
+      - 8003:8000
+    environment:
+    - DEVICE_IP=192.168.86.54
+
+  tasmota-4:
+    image: ghcr.io/astr0n8t/tasmota-power-exporter:latest
+    container_name: tasmota-power-4
+    restart: always
+    ports:
+      - 8004:8000
+    environment:
+    - DEVICE_IP=192.168.86.52
